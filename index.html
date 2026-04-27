@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VNS — Erika Danielle Cuevas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Light pink palette */
+  --bg:        #fce8f0;
+  --bg-mid:    #f8d6e6;
+  --bg-deep:   #f0c0d8;
+  --section-alt: #fdf2f7;
+
+  /* Satin pink lettering */
+  --satin-1: #e8006a;   /* deep satin shadow */
+  --satin-2: #f5378a;   /* mid satin */
+  --satin-3: #ff69b4;   /* highlight satin */
+  --satin-4: #ffb3d1;   /* top sheen */
+  --pink:    #e8006a;
+  --hot-pink:#cc005a;
+  --gold:    #c8943a;
+  --gold-lt: #e8c070;
+
+  /* Text on light bg */
+  --text:      #3a0a20;
+  --text-mid:  #7a2040;
+  --text-soft: rgba(58,10,32,0.45);
+
+  --nav-h: 72px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+  cursor: default;
+}
+
+
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 52px;
+  background: linear-gradient(to bottom, rgba(252,232,240,0.97) 0%, rgba(252,232,240,0) 100%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(232,0,106,0.08);
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 900; letter-spacing: 0.25em;
+  text-decoration: none; transition: color 0.2s;
+  /* small 3D satin on nav logo */
+  color: var(--satin-2);
+  text-shadow:
+    0 1px 0 var(--satin-1),
+    0 2px 0 rgba(200,0,80,0.4),
+    0 3px 6px rgba(200,0,80,0.15);
+}
+.nav-logo:hover { color: var(--satin-3); }
+
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-mid); text-decoration: none; font-weight: 600;
+  transition: color 0.2s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--pink); transition: width 0.3s ease;
+}
+.nav-links a:hover { color: var(--pink); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-social { display: flex; gap: 22px; }
+.nav-social a {
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-soft); text-decoration: none; transition: color 0.2s;
+}
+.nav-social a:hover { color: var(--pink); }
+
+/* ── HERO ── */
+#hero {
+  position: relative; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 45%, rgba(232,0,106,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 25%, rgba(200,148,58,0.1) 0%, transparent 50%),
+    linear-gradient(180deg, #fce8f0 0%, #f8d6e6 55%, #fdf2f7 80%, #fff 100%);
+}
+
+/* Vimeo background */
+.hero-video-bg {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden;
+}
+.hero-video-bg iframe {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 100vw;
+  height: 56.25vw; /* 16:9 at full width */
+  min-height: 100vh;
+  min-width: 177.78vh; /* 16:9 at full height */
+  transform: translate(-50%, -50%);
+  border: none;
+  pointer-events: none;
+}
+/* overlay to tint the video and keep text readable */
+.hero-video-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(252,232,240,0.45) 0%,
+    rgba(248,214,230,0.35) 50%,
+    rgba(253,242,247,0.7) 85%,
+    #fff 100%
+  );
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  text-align: center; padding: 0 24px;
+}
+
+.hero-eyebrow {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1rem; letter-spacing: 0.38em; color: var(--gold);
+  margin-bottom: 20px;
+  opacity: 0; animation: fadeUp 1s 0.15s ease forwards;
+  text-shadow: 0 1px 3px rgba(200,148,58,0.3);
+}
+
+/* ── 3D SATIN HERO NAME ── */
+.hero-name {
+  font-family: 'Playfair Display', serif; font-weight: 900;
+  font-size: clamp(6rem, 18vw, 16rem);
+  line-height: 0.88; letter-spacing: 0.06em;
+  /* Satin layered text-shadow for 3D depth */
+  color: #f5378a;
+  text-shadow:
+    /* highlight sheen top-left */
+    -1px -1px 0 #ffb3d1,
+    /* satin body layers building depth */
+     0px  1px 0 #f0237e,
+     0px  2px 0 #e81070,
+     0px  3px 0 #de0065,
+     0px  4px 0 #d4005c,
+     0px  5px 0 #ca0053,
+     0px  6px 0 #c0004a,
+     /* cast shadow */
+     1px  7px 4px rgba(180,0,60,0.35),
+     2px 10px 12px rgba(160,0,50,0.25),
+     3px 14px 24px rgba(140,0,40,0.15);
+  opacity: 0;
+  animation: fadeUp 1s 0.3s ease forwards;
+  /* subtle shimmer animation */
+  background: linear-gradient(
+    135deg,
+    #ffcce0 0%,
+    #ff69b4 20%,
+    #f5378a 40%,
+    #e8006a 55%,
+    #f5378a 70%,
+    #ff69b4 85%,
+    #ffcce0 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* override text-shadow since clip removes it — use filter instead */
+  filter:
+    drop-shadow(0px 2px 0px rgba(200,0,80,0.6))
+    drop-shadow(0px 4px 0px rgba(180,0,60,0.4))
+    drop-shadow(0px 6px 0px rgba(160,0,50,0.25))
+    drop-shadow(1px 8px 8px rgba(140,0,40,0.2))
+    drop-shadow(2px 12px 20px rgba(120,0,30,0.12));
+  animation: satinShimmer 5s ease-in-out infinite alternate, fadeUp 1s 0.3s ease forwards;
+}
+@keyframes satinShimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+  letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--text-mid); margin-top: 22px;
+  opacity: 0; animation: fadeUp 1s 0.48s ease forwards;
+}
+.hero-desc {
+  font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-soft); margin-top: 8px;
+  opacity: 0; animation: fadeUp 1s 0.58s ease forwards;
+}
+.hero-cta {
+  margin-top: 52px; display: flex; gap: 16px; justify-content: center;
+  opacity: 0; animation: fadeUp 1s 0.72s ease forwards;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-block; padding: 14px 38px;
+  font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+  text-decoration: none; font-weight: 700; cursor: none;
+  transition: all 0.28s ease; position: relative; overflow: hidden;
+}
+.btn-pink {
+  background: var(--pink); color: #fff; border: 1.5px solid var(--pink);
+  box-shadow: 0 4px 16px rgba(232,0,106,0.35), 0 2px 4px rgba(232,0,106,0.2);
+}
+.btn-pink::before {
+  content: ''; position: absolute; inset: 0; background: var(--hot-pink);
+  transform: translateX(-101%); transition: transform 0.3s cubic-bezier(0.77,0,0.18,1);
+}
+.btn-pink:hover::before { transform: translateX(0); }
+.btn-pink:hover { box-shadow: 0 6px 22px rgba(232,0,106,0.45); }
+.btn-pink span { position: relative; z-index: 1; }
+.btn-outline {
+  background: transparent; color: var(--text-mid);
+  border: 1.5px solid rgba(58,10,32,0.2);
+}
+.btn-outline:hover { border-color: var(--pink); color: var(--pink); }
+.btn-invert {
+  background: var(--pink); color: #ffd6e8;
+  border: 1.5px solid var(--pink);
+  box-shadow: 0 4px 16px rgba(232,0,106,0.35), 0 2px 4px rgba(232,0,106,0.2);
+}
+.btn-invert:hover { background: var(--hot-pink); border-color: var(--hot-pink); color: #ffe0ee; box-shadow: 0 6px 22px rgba(232,0,106,0.45); }
+
+/* SCROLL HINT */
+.scroll-hint {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 10px;
+  animation: breathe 3s ease-in-out infinite;
+}
+@keyframes breathe { 0%,100%{opacity:0.3;} 50%{opacity:0.7;} }
+.scroll-hint-text {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.58rem; letter-spacing: 0.3em; color: var(--gold);
+}
+.scroll-line {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: lineGrow 2s ease-in-out infinite;
+}
+@keyframes lineGrow {
+  0%  { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform-origin: bottom; }
+  100%{ transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ── TICKER ── */
+.ticker-wrap {
+  overflow: hidden; padding: 13px 0;
+  background: rgba(232,0,106,0.05);
+  border-top: 1px solid rgba(232,0,106,0.12);
+  border-bottom: 1px solid rgba(232,0,106,0.12);
+}
+.ticker-track {
+  display: flex; width: max-content;
+  animation: ticker 28s linear infinite;
+}
+@keyframes ticker { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+.ticker-item {
+  white-space: nowrap; font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-size: 0.95rem; letter-spacing: 0.2em;
+  color: rgba(58,10,32,0.22); padding: 0 40px;
+}
+.ticker-item.accent {
+  font-style: normal; font-size: 0.6rem; letter-spacing: 0.3em;
+  text-transform: uppercase; color: rgba(232,0,106,0.4);
+}
+
+/* ── SECTION COMMON ── */
+.section-wrap { max-width: 1320px; margin: 0 auto; padding: 100px 52px; }
+
+.section-eyebrow {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.85rem; letter-spacing: 0.25em; color: var(--gold);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 16px;
+}
+.section-eyebrow::before {
+  content: ''; display: block; width: 32px; height: 1px;
+  background: linear-gradient(90deg, var(--pink), var(--gold));
+}
+
+/* 3D satin section titles */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  font-weight: 900; line-height: 0.95; letter-spacing: 0.02em; margin-bottom: 56px;
+  color: var(--text);
+}
+.section-title em {
+  font-style: italic;
+  color: #f5378a;
+  background: linear-gradient(135deg, #ffcce0 0%, #ff69b4 25%, #f5378a 50%, #e8006a 65%, #f5378a 80%, #ffb3d1 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  filter:
+    drop-shadow(0px 2px 0px rgba(200,0,80,0.5))
+    drop-shadow(0px 4px 0px rgba(170,0,60,0.28))
+    drop-shadow(1px 6px 8px rgba(140,0,40,0.18));
+  animation: satinShimmer 6s ease-in-out infinite alternate;
+}
+
+/* ── MUSIC ── */
+#music { border-top: none; background: #fff; }
+
+.releases-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 2px;
+}
+.release-card {
+  position: relative; aspect-ratio: 1;
+  overflow: hidden; background: var(--bg-deep); cursor: none;
+}
+.release-art {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.55s cubic-bezier(0.77,0,0.18,1);
+}
+.release-card:hover .release-art { transform: scale(1.06); }
+
+/* Lighter, warmer art gradients */
+.art-a { background: linear-gradient(135deg, #f0a0c0 0%, #e8006a 55%, #fce8f0 100%); }
+.art-b { background: linear-gradient(135deg, #f8e0b0 0%, #c8943a 60%, #fdf2e0 100%); }
+.art-c { background: linear-gradient(135deg, #f0c0d8 0%, #d44080 45%, #f8a0c8 100%); }
+.art-d { background: linear-gradient(135deg, #e8d0f0 0%, #9040b0 55%, #d090e0 100%); }
+
+.art-text {
+  font-family: 'Playfair Display', serif; font-size: 3rem;
+  font-weight: 900; font-style: italic; opacity: 0.2; color: #fff; letter-spacing: 0.05em;
+}
+.release-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(58,10,32,0.9) 0%, rgba(58,10,32,0.1) 65%, transparent 100%);
+  opacity: 0; transition: opacity 0.38s ease;
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 26px;
+}
+.release-card:hover .release-overlay { opacity: 1; }
+.release-type {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.75rem; letter-spacing: 0.2em; color: var(--gold-lt); margin-bottom: 4px;
+}
+.release-name {
+  font-family: 'Playfair Display', serif; font-size: 1.4rem;
+  font-weight: 700; line-height: 1.1; color: #fff;
+}
+.release-meta {
+  font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); margin-top: 7px;
+}
+.release-listen {
+  display: inline-block; margin-top: 14px; padding: 8px 20px;
+  font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.4); color: #fff; text-decoration: none;
+  cursor: none; transition: all 0.22s; align-self: flex-start;
+}
+.release-listen:hover { background: var(--pink); border-color: var(--pink); }
+
+/* ── FEATURED VIDEO ── */
+.featured-video {
+  margin-bottom: 40px;
+}
+.vimeo-wrap {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 12px 48px rgba(232,0,106,0.12), 0 4px 16px rgba(58,10,32,0.08);
+}
+.vimeo-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+/* ── VIDEOS ── */
+#videos { border-top: 1px solid rgba(232,0,106,0.08); }
+
+.videos-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+.video-card { position: relative; aspect-ratio: 16/9; overflow: hidden; cursor: none; }
+.video-bg {
+  position: absolute; inset: 0;
+  transition: transform 0.5s cubic-bezier(0.77,0,0.18,1);
+}
+.video-card:hover .video-bg { transform: scale(1.04); }
+.vbg-1 { background: linear-gradient(135deg, #f0b0c8 0%, #e8006a 100%); }
+.vbg-2 { background: linear-gradient(135deg, #f8d0e0 0%, #c0005a 60%, #e8006a 100%); }
+.vbg-3 { background: linear-gradient(135deg, #f8e8b0 0%, #c8943a 100%); }
+
+.video-overlay {
+  position: absolute; inset: 0;
+  background: rgba(58,10,32,0.4);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 22px; transition: background 0.3s;
+}
+.video-card:hover .video-overlay { background: rgba(58,10,32,0.15); }
+.play-btn {
+  width: 48px; height: 48px;
+  border: 1.5px solid rgba(255,255,255,0.6); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  align-self: center; margin: auto; transition: all 0.28s;
+  background: rgba(255,255,255,0.1);
+}
+.video-card:hover .play-btn {
+  background: var(--pink); border-color: var(--pink); transform: scale(1.08);
+}
+.play-btn svg { margin-left: 3px; }
+.play-btn path { fill: rgba(255,255,255,0.9); }
+.video-label {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.68rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.7); margin-bottom: 3px;
+}
+.video-title {
+  font-family: 'Playfair Display', serif; font-size: 0.95rem;
+  font-weight: 600; line-height: 1.25; color: #fff;
+}
+
+/* ── TOUR ── */
+#tour { border-top: 1px solid rgba(232,0,106,0.08); background: var(--section-alt); }
+
+.tour-list { display: flex; flex-direction: column; }
+.tour-row {
+  display: grid; grid-template-columns: 170px 1fr auto;
+  align-items: center; gap: 28px; padding: 26px 0;
+  border-bottom: 1px solid rgba(232,0,106,0.1);
+  position: relative; cursor: none; transition: padding-left 0.28s ease;
+}
+.tour-row::before {
+  content: ''; position: absolute; left: -52px; right: -52px; top: 0; bottom: 0;
+  background: rgba(232,0,106,0.04); opacity: 0; transition: opacity 0.22s;
+}
+.tour-row:hover::before { opacity: 1; }
+.tour-row:hover { padding-left: 10px; }
+.tour-row:hover .tour-venue { color: var(--pink); }
+.tour-date {
+  font-family: 'Cormorant Garamond', serif; font-size: 0.82rem;
+  letter-spacing: 0.12em; color: var(--gold); font-style: italic;
+}
+.tour-venue {
+  font-family: 'Playfair Display', serif; font-size: 1.2rem;
+  font-weight: 700; transition: color 0.22s; color: var(--text);
+}
+.tour-city {
+  font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--text-soft); margin-top: 4px;
+}
+.tour-btn {
+  display: inline-block; padding: 10px 26px;
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600;
+  border: 1.5px solid rgba(232,0,106,0.25); color: var(--pink);
+  text-decoration: none; cursor: none; transition: all 0.22s; white-space: nowrap;
+}
+.tour-btn:hover { background: var(--pink); border-color: var(--pink); color: #fff; }
+
+/* ── ABOUT ── */
+#about { border-top: 1px solid rgba(232,0,106,0.08); }
+
+.about-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+}
+.about-image-placeholder {
+  aspect-ratio: 3/4;
+  background: linear-gradient(160deg, #f0c8d8 0%, #e8a0bf 50%, #f8d6e6 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(232,0,106,0.15), 0 8px 24px rgba(232,0,106,0.1);
+}
+.about-image-placeholder::after {
+  content: 'Add Your Photo';
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.8rem; letter-spacing: 0.2em; color: rgba(58,10,32,0.3);
+  text-transform: uppercase;
+}
+.about-image-placeholder::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(232,0,106,0.08) 0%, transparent 60%);
+}
+.about-text .section-title { margin-bottom: 28px; }
+.about-body {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; line-height: 1.85;
+  color: var(--text-mid); font-weight: 300; margin-bottom: 40px;
+}
+.about-body em { color: var(--pink); font-style: italic; }
+
+/* ── SOCIAL ── */
+.social-strip {
+  padding: 48px 52px;
+  border-top: 1px solid rgba(232,0,106,0.1);
+  border-bottom: 1px solid rgba(232,0,106,0.1);
+  background: rgba(232,0,106,0.04);
+  text-align: center;
+}
+.social-label {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 0.82rem; letter-spacing: 0.25em; color: var(--text-soft);
+  margin-bottom: 26px;
+}
+.social-icons { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+.social-icons a {
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-soft); text-decoration: none; font-weight: 600;
+  transition: color 0.2s; cursor: none;
+}
+.social-icons a:hover { color: var(--pink); }
+
+/* ── SIGNUP ── */
+#signup {
+  border-top: 1px solid rgba(232,0,106,0.08);
+  background: var(--section-alt);
+  text-align: center; padding: 110px 52px;
+}
+.signup-inner { max-width: 520px; margin: 0 auto; }
+.signup-inner .section-title { margin-bottom: 12px; }
+.signup-body {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+  font-style: italic; color: var(--text-soft); margin-bottom: 44px;
+  letter-spacing: 0.05em; line-height: 1.6;
+}
+.signup-form {
+  display: flex;
+  border: 1.5px solid rgba(232,0,106,0.25); overflow: hidden;
+  transition: border-color 0.3s;
+  box-shadow: 0 4px 20px rgba(232,0,106,0.08);
+}
+.signup-form:focus-within { border-color: var(--pink); box-shadow: 0 4px 24px rgba(232,0,106,0.18); }
+.signup-form input {
+  flex: 1; background: #fff; border: none; outline: none;
+  padding: 15px 22px; font-size: 0.7rem; letter-spacing: 0.1em;
+  color: var(--text); font-family: 'Montserrat', sans-serif;
+}
+.signup-form input::placeholder { color: rgba(58,10,32,0.28); }
+.signup-form button {
+  background: var(--pink); border: none; padding: 15px 30px;
+  font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+  font-weight: 700; color: #fff; cursor: none;
+  transition: background 0.22s; font-family: 'Montserrat', sans-serif;
+}
+.signup-form button:hover { background: var(--hot-pink); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 40px 52px; border-top: 1px solid rgba(232,0,106,0.08);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg);
+}
+.footer-logo {
+  font-family: 'Playfair Display', serif; font-size: 1.3rem;
+  font-weight: 900; letter-spacing: 0.2em;
+  color: #f5378a;
+  filter:
+    drop-shadow(0px 1px 0px rgba(200,0,80,0.5))
+    drop-shadow(0px 3px 5px rgba(180,0,60,0.18));
+}
+.footer-copy {
+  font-size: 0.58rem; letter-spacing: 0.16em; color: var(--text-soft);
+}
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .section-wrap { padding: 70px 24px; }
+  .releases-grid { grid-template-columns: repeat(2,1fr); }
+  .about-inner { grid-template-columns: 1fr; gap: 40px; }
+  .videos-grid { grid-template-columns: 1fr; }
+  .tour-row { grid-template-columns: 1fr; gap: 10px; }
+  footer { flex-direction: column; gap: 10px; text-align: center; }
+  #signup { padding: 70px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">VNS</a>
+  <ul class="nav-links">
+    <li><a href="#music">New Music</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#tour">Tour</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#signup">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <!-- Vimeo background -->
+  <div class="hero-video-bg">
+    <iframe src="https://player.vimeo.com/video/1184456036?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&muted=1&background=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="METAMORPHOSIS LOOPING VIDEO"></iframe>
+  </div>
+  <div class="hero-video-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-name">VNS</div>
+    <div class="hero-cta">
+      <a href="#music" class="btn btn-pink"><span>Music</span></a>
+      <a href="#videos" class="btn btn-invert">Videos</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-hint-text">scroll</div>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section id="music">
+  <div class="section-wrap">
+    <div class="section-eyebrow reveal">Discography</div>
+    <div class="section-title reveal">New <em>Music</em></div>
+    <div class="releases-grid">
+      <div class="release-card reveal">
+        <div class="release-art art-a"><div class="art-text">VNS</div></div>
+        <div class="release-overlay">
+          <div class="release-type">Single</div>
+          <div class="release-name">Not Sorry</div>
+          <div class="release-meta">2025 — Add your Spotify link</div>
+          <a href="#" class="release-listen">Listen</a>
+        </div>
+      </div>
+      <div class="release-card reveal">
+        <div class="release-art art-b"><div class="art-text">VNS</div></div>
+        <div class="release-overlay">
+          <div class="release-type">Single</div>
+          <div class="release-name">Rodeo Drive</div>
+          <div class="release-meta">2024 — Add your link</div>
+          <a href="#" class="release-listen">Listen</a>
+        </div>
+      </div>
+      <div class="release-card reveal">
+        <div class="release-art art-c"><div class="art-text">VNS</div></div>
+        <div class="release-overlay">
+          <div class="release-type">Single</div>
+          <div class="release-name">Your Track Title</div>
+          <div class="release-meta">2024 — Replace with real content</div>
+          <a href="#" class="release-listen">Listen</a>
+        </div>
+      </div>
+      <div class="release-card reveal">
+        <div class="release-art art-d"><div class="art-text">VNS</div></div>
+        <div class="release-overlay">
+          <div class="release-type">Mix</div>
+          <div class="release-name">Your Track Title</div>
+          <div class="release-meta">2024 — Replace with real content</div>
+          <a href="#" class="release-listen">Listen</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="section-wrap">
+    <div class="section-eyebrow reveal">Watch</div>
+    <div class="section-title reveal"><em>Videos</em></div>
+
+    <!-- Featured Vimeo Embed -->
+    <div class="featured-video reveal">
+      <div class="vimeo-wrap">
+        <iframe src="https://player.vimeo.com/video/1184456036?badge=0&autopause=0&player_id=0&app_id=58479"
+          frameborder="0"
+          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+          allowfullscreen
+          title="VNS">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="videos-grid">
+      <div class="video-card reveal">
+        <div class="video-bg vbg-1"></div>
+        <div class="video-overlay">
+          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M0 0L14 8L0 16V0Z"/></svg></div>
+          <div>
+            <div class="video-label">Official Video</div>
+            <div class="video-title">Not Sorry — Music Video</div>
+          </div>
+        </div>
+      </div>
+      <div class="video-card reveal">
+        <div class="video-bg vbg-2"></div>
+        <div class="video-overlay">
+          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M0 0L14 8L0 16V0Z"/></svg></div>
+          <div>
+            <div class="video-label">Live</div>
+            <div class="video-title">Add Your Video Title Here</div>
+          </div>
+        </div>
+      </div>
+      <div class="video-card reveal">
+        <div class="video-bg vbg-3"></div>
+        <div class="video-overlay">
+          <div class="play-btn"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M0 0L14 8L0 16V0Z"/></svg></div>
+          <div>
+            <div class="video-label">Visualizer</div>
+            <div class="video-title">Add Your Video Title Here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOUR -->
+<section id="tour">
+  <div class="section-wrap">
+    <div class="section-eyebrow reveal">Live</div>
+    <div class="section-title reveal">Tour <em>Dates</em></div>
+    <div class="tour-list">
+      <div class="tour-row reveal">
+        <div class="tour-date">April 26, 2026</div>
+        <div>
+          <div class="tour-venue">The Bank SF</div>
+          <div class="tour-city">San Francisco, CA — Replace with your show</div>
+        </div>
+        <a href="#shop" class="tour-btn">Shop</a>
+      </div>
+      <div class="tour-row reveal">
+        <div class="tour-date">May 10, 2026</div>
+        <div>
+          <div class="tour-venue">Venue Name Here</div>
+          <div class="tour-city">City, State — Add your date</div>
+        </div>
+        <a href="#shop" class="tour-btn">Shop</a>
+      </div>
+      <div class="tour-row reveal">
+        <div class="tour-date">Jun 07, 2026</div>
+        <div>
+          <div class="tour-venue">Festival / Club</div>
+          <div class="tour-city">City, State — Add your event</div>
+        </div>
+        <a href="#shop" class="tour-btn">Shop</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="about-inner">
+      <div class="about-image-placeholder reveal" style="background:none; padding:0;">
+        <img src="https://www.dropbox.com/scl/fi/v8t1ee3h8tmo98ozpc8e0/DSC02354.JPEG?rlkey=hqhdektfurf9q551hfqrjpofm&st=87tfg2zw&raw=1" alt="Erika Cuevas" style="width:100%; height:100%; object-fit:cover; object-position: center top; display:block;">
+      </div>
+      <div class="about-text">
+        <div class="section-eyebrow reveal">About</div>
+        <div class="section-title reveal"><em>Erika</em> Cuevas</div>
+        <div class="about-body reveal">
+          Producer. Recording Artist. Influencer. Fitness Enthusiast.<br><br>
+          <em>VNS</em> is Erika Danielle Cuevas — a San Francisco-based artist making bold music with unapologetic femininity. Raw, glamorous, and entirely her own.
+        </div>
+        <div style="display:flex; gap:14px;" class="reveal">
+          <a href="https://instagram.com/iamvnsv" target="_blank" class="btn btn-pink"><span>Follow @iamvnsv</span></a>
+          <a href="https://open.spotify.com/artist/0f51n8BLzofjc31W7DCDcY?si=4l2txO80QB2KDSGdAIw1LQ" target="_blank" class="btn btn-outline">Stream Music</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<div class="social-strip">
+  <div class="social-label">Follow VNS · @iamvnsv</div>
+  <div class="social-icons">
+    <a href="https://instagram.com/iamvnsv" target="_blank">Instagram</a>
+    <a href="https://open.spotify.com/artist/0f51n8BLzofjc31W7DCDcY?si=4l2txO80QB2KDSGdAIw1LQ" target="_blank">Spotify</a>
+    <a href="#" target="_blank">SoundCloud</a>
+    <a href="#" target="_blank">TikTok</a>
+    <a href="#" target="_blank">YouTube</a>
+    <a href="#" target="_blank">Threads</a>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<section id="signup">
+  <div class="signup-inner">
+    <div class="section-eyebrow reveal" style="justify-content:center;">Stay Connected</div>
+    <div class="section-title reveal">Get <em>Updates</em></div>
+    <div class="signup-body reveal">New music, shows & exclusive content — straight to you.</div>
+    <div class="signup-form reveal">
+      <input type="email" placeholder="your@email.com">
+      <button>Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">VNS</div>
+  <div class="footer-copy">©2026 VNS · Erika Danielle Cuevas · @iamvnsv · San Francisco</div>
+</footer>
+
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
