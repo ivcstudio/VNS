@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caballera, Reina del Desierto — VNS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream:      #f5ede0;
+      --parchment:  #ede0c8;
+      --sand:       #c8a87a;
+      --brown:      #5c3a1e;
+      --dark:       #2a1a0a;
+      --gold:       #c8943a;
+      --rust:       #a04020;
+      --text:       #2a1a0a;
+      --text-mid:   rgba(42,26,10,0.6);
+      --text-soft:  rgba(42,26,10,0.35);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(245,237,224,0.97), transparent);
+      backdrop-filter: blur(8px);
+    }
+    .nav-back {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 0.85rem; letter-spacing: 0.15em; color: var(--brown);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--gold); }
+    .nav-back::before { content: '←'; font-style: normal; }
+    .nav-world {
+      font-family: 'Montserrat', sans-serif; font-size: 0.55rem;
+      letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-soft);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 52px 80px;
+      background:
+        radial-gradient(ellipse at 25% 40%, rgba(200,148,58,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 65%, rgba(160,64,32,0.1) 0%, transparent 50%),
+        linear-gradient(180deg, #f5ede0 0%, #ede0c8 55%, #f5ede0 100%);
+    }
+    .hero-world-label {
+      font-family: 'Montserrat', sans-serif; font-size: 0.52rem;
+      letter-spacing: 0.42em; text-transform: uppercase; color: var(--text-soft);
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1rem; letter-spacing: 0.38em; color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: clamp(3rem, 8vw, 7rem); line-height: 0.95;
+      color: var(--brown);
+      text-shadow:
+        0 1px 0 rgba(200,148,58,0.5),
+        0 3px 0 rgba(160,64,32,0.25),
+        0 8px 20px rgba(42,26,10,0.12);
+      margin-bottom: 16px;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.2rem; line-height: 1.6; letter-spacing: 0.1em;
+      color: var(--text-mid); margin-bottom: 8px;
+    }
+    .ornament {
+      display: flex; align-items: center; gap: 14px;
+      margin: 24px auto; max-width: 320px;
+    }
+    .ornament::before, .ornament::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--sand), transparent);
+    }
+    .ornament-text {
+      font-family: 'Montserrat', sans-serif; font-size: 0.5rem;
+      letter-spacing: 0.35em; text-transform: uppercase; color: var(--rust);
+    }
+    .stream-label {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 0.8rem; letter-spacing: 0.18em; color: var(--text-soft);
+      margin-top: 14px;
+    }
+    .spotify-wrap {
+      margin-top: 40px; width: 100%; max-width: 520px;
+      border-radius: 14px; overflow: hidden;
+      box-shadow: 0 14px 44px rgba(42,26,10,0.18), 0 4px 12px rgba(42,26,10,0.08);
+    }
+    .spotify-wrap iframe { display: block; border: none; }
+    /* Spotify */
+
+    /* ── VIDEO EMBED ── */
+    .vimeo-embed {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      margin-top: 40px;
+      border-radius: 2px;
+      box-shadow: 0 16px 52px rgba(42,26,10,0.18), 0 4px 14px rgba(42,26,10,0.1);
+    }
+    .vimeo-embed iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── DIVIDER ── */
+    .full-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(92,58,30,0.15) 30%, rgba(200,148,58,0.3) 50%, rgba(92,58,30,0.15) 70%, transparent 100%);
+    }
+
+    /* ── SECTION COMMON ── */
+    .sec { padding: 100px 52px; max-width: 1320px; margin: 0 auto; }
+
+    .sec-eyebrow {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 0.85rem; letter-spacing: 0.28em; color: var(--gold);
+      margin-bottom: 8px; display: flex; align-items: center; gap: 14px;
+    }
+    .sec-eyebrow::before {
+      content: ''; display: block; width: 28px; height: 1px;
+      background: linear-gradient(90deg, var(--rust), var(--gold));
+    }
+    .sec-title {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: clamp(2rem, 4.5vw, 3.8rem); line-height: 0.95;
+      color: var(--brown); margin-bottom: 12px;
+    }
+    .sec-title em { font-style: italic; color: var(--gold); }
+    .sec-body {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.12rem;
+      line-height: 1.9; color: var(--text-mid); font-weight: 300;
+      max-width: 600px;
+    }
+    .sec-body em { color: var(--rust); font-style: italic; }
+
+    /* ── ROOTS — text + art layout ── */
+    #roots { }
+    .roots-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 70px; align-items: start; margin-top: 56px;
+    }
+    .roots-quote {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem); line-height: 1.25;
+      color: var(--brown); margin-bottom: 28px;
+    }
+    .roots-quote span { color: var(--gold); }
+
+    /* Featured single artwork — full bleed card */
+    .single-artwork {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4;
+      box-shadow: 0 20px 60px rgba(42,26,10,0.2);
+    }
+    .single-artwork img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.55s cubic-bezier(0.77,0,0.18,1);
+    }
+    .single-artwork:hover img { transform: scale(1.04); }
+    .single-artwork-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(42,26,10,0.85) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
+    }
+    .single-artwork-title {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 1.6rem; font-weight: 700; color: #fff; line-height: 1.1;
+    }
+    .single-artwork-sub {
+      font-family: 'Montserrat', sans-serif; font-size: 0.55rem;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55); margin-top: 6px;
+    }
+
+    /* ── ARTWORK GRID ── */
+    #artwork {
+      background: linear-gradient(180deg, var(--cream) 0%, var(--parchment) 50%, var(--cream) 100%);
+      padding: 100px 52px;
+    }
+    #artwork .inner { max-width: 1320px; margin: 0 auto; }
+
+    .artwork-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 4px;
+      margin-top: 56px;
+    }
+    .artwork-card {
+      position: relative; overflow: hidden;
+    }
+    .artwork-card.wide {
+      grid-column: 1 / -1;
+      aspect-ratio: 21/8;
+    }
+    .artwork-card.tall { aspect-ratio: 3/4; }
+    .artwork-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.55s cubic-bezier(0.77,0,0.18,1);
+    }
+    .artwork-card:hover img { transform: scale(1.04); }
+    .artwork-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(42,26,10,0.75) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.35s;
+      display: flex; align-items: flex-end; padding: 22px;
+    }
+    .artwork-card:hover .artwork-overlay { opacity: 1; }
+    .artwork-label {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 0.95rem; letter-spacing: 0.12em; color: #fff;
+    }
+
+    /* Stream buttons */
+    .stream-row {
+      display: flex; gap: 14px; flex-wrap: wrap; margin-top: 40px;
+    }
+    .stream-btn {
+      display: inline-block; padding: 11px 26px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      font-weight: 700; text-decoration: none;
+      border: 1.5px solid var(--brown); color: var(--brown);
+      transition: all 0.22s;
+    }
+    .stream-btn:hover { background: var(--brown); color: var(--cream); }
+    .stream-btn.primary { background: var(--brown); color: var(--cream); }
+    .stream-btn.primary:hover { background: var(--dark); border-color: var(--dark); }
+
+    /* ── LA REINA — 6 PHOTO GRID ── */
+    #reina { }
+    .reina-intro {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center; margin-bottom: 60px;
+    }
+
+    /* Masonry-style 6-photo grid */
+    .reina-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 4px;
+    }
+    /* Top row: 3 equal portrait cards */
+    .reina-card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 2/3;
+    }
+    /* Make the rust gown photos span taller on bottom row */
+    .reina-card.featured {
+      aspect-ratio: 3/4;
+    }
+    .reina-card img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      transition: transform 0.55s cubic-bezier(0.77,0,0.18,1);
+    }
+    .reina-card:hover img { transform: scale(1.04); }
+    .reina-card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(42,26,10,0.6) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.35s;
+      display: flex; align-items: flex-end; padding: 20px;
+    }
+    .reina-card:hover .reina-card-overlay { opacity: 1; }
+    .reina-card-label {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 0.85rem; letter-spacing: 0.1em; color: rgba(255,255,255,0.9);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(92,58,30,0.12);
+      padding: 36px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--parchment);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: 1.1rem; letter-spacing: 0.22em;
+      color: rgba(92,58,30,0.28);
+    }
+    .footer-world {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 0.78rem; letter-spacing: 0.14em; color: var(--text-soft);
+    }
+    .footer-nav a {
+      font-family: 'Montserrat', sans-serif; font-size: 0.52rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-soft); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-nav a:hover { color: var(--gold); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      nav { padding: 16px 24px; }
+      .hero { padding: 100px 24px 60px; }
+      .sec { padding: 70px 24px; }
+      #artwork { padding: 70px 24px; }
+      .roots-layout { grid-template-columns: 1fr; gap: 40px; }
+      .artwork-grid { grid-template-columns: 1fr; }
+      .artwork-card.wide { aspect-ratio: 4/3; }
+      .reina-intro { grid-template-columns: 1fr; gap: 30px; }
+      .reina-grid { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; gap: 10px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-back" href="../index.html">VNS</a>
+  <div class="nav-world">One Artist · Three Worlds · World I</div>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-world-label">One Artist · Three Worlds · World I</div>
+  <div class="hero-eyebrow">Bienvenida al desierto</div>
+  <h1 class="hero-title">Caballera,<br><em>Reina del Desierto</em></h1>
+  <div class="hero-subtitle">
+    A little house. A little Mexico.<br>A little country attitude.
+  </div>
+  <div class="ornament">
+    <span class="ornament-text">Electronic Desert House · Vaquera Spirit · Mexican Roots · Western Soul</span>
+  </div>
+
+  <!-- Spotify player -->
+  <div class="spotify-wrap">
+    <iframe
+      src="https://open.spotify.com/embed/track/1v3rRDQdOZ5Caox3DalhcX?utm_source=generator&theme=0"
+      width="100%" height="152"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      loading="lazy">
+    </iframe>
+  </div>
+  <div class="stream-label">Featured Single — Cowgirl Summer · Out Everywhere</div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ── LAS RAÍCES — STORY ── -->
+<section class="sec" id="roots">
+  <div class="roots-layout">
+    <div>
+      <div class="sec-eyebrow reveal">Las Raíces</div>
+      <h2 class="sec-title reveal">The <em>Roots</em></h2>
+      <div class="roots-quote reveal">
+        "California-born.<br>
+        <span>Mexican-rooted.</span><br>
+        "House" by nature."
+      </div>
+      <div class="sec-body reveal">
+        Before the stages and the studios — there was the desert, ranchera music drifting through open windows, and the feeling of wide open land beneath her feet.<br><br>
+        <em>Caballera</em> is not a character. It is a memory. The little girl who dreamed of a world outside of the universe and learned how to make them her own.<br><br>
+        Raised on tequila gritos, mariachi fiestas, and the rhythm of a culture that never lets you forget where you come from. This world is her roots — electrified.
+      </div>
+    </div>
+    <!-- Featured single artwork card -->
+    <div class="single-artwork reveal">
+      <img
+        src="DROPBOX_LINK_1A3581C3-0243-4457-A89E-FE48D7A0F11D.PNG"
+        alt="VNS — Cowgirl Summer single artwork">
+      <div class="single-artwork-overlay">
+        <div>
+          <div class="single-artwork-title">Cowgirl Summer</div>
+          <div class="single-artwork-sub">VNS · The New Single · Out Now</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ── LA OBRA — ARTWORK ── -->
+<div id="artwork">
+  <div class="inner">
+    <div class="sec-eyebrow reveal">La Obra</div>
+    <h2 class="sec-title reveal">The <em>Artwork</em></h2>
+    <p class="sec-body reveal">Cowgirl Summer — the debut single of Caballera, Reina del Desierto. Out everywhere.</p>
+
+    <div class="artwork-grid">
+      <!-- Wide triptych neon desert -->
+      <div class="artwork-card wide reveal">
+        <img
+          src="https://www.dropbox.com/scl/fi/s587aarbpf7ihqc9x6gf3/394D7E26-57D5-4B4C-92B1-417849CA262C.PNG?rlkey=mzeat4e0zo9csnynzqb3pyldc&st=fsxqak0c&raw=1"
+          alt="VNS — Cowgirl Summer neon desert triptych">
+        <div class="artwork-overlay">
+          <div class="artwork-label">Cowgirl Summer · Neon Desert Campaign</div>
+        </div>
+      </div>
+      <!-- Dark bar promo -->
+      <div class="artwork-card tall reveal">
+        <img
+          src="https://www.dropbox.com/scl/fi/66vk9r783s5yt764s0ehq/bar-rope-promo-cowgirl-summer.jpg?rlkey=06a0rfeehqk2gvbwk9l2x1hvd&st=c00aae6u&raw=1"
+          alt="VNS — Cowgirl Summer dark bar artwork">
+        <div class="artwork-overlay">
+          <div class="artwork-label">Cowgirl Summer · Single Cover</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="stream-row reveal">
+      <a href="https://open.spotify.com/track/1v3rRDQdOZ5Caox3DalhcX" target="_blank" class="stream-btn primary">Stream on Spotify</a>
+      <a href="https://music.apple.com/us/artist/vns/1868139854" target="_blank" class="stream-btn">Apple Music</a>
+      <a href="https://music.amazon.com" target="_blank" class="stream-btn">Amazon Music</a>
+      <a href="https://youtube.com/@iamvnsv" target="_blank" class="stream-btn">YouTube</a>
+    </div>
+  </div>
+</div>
+
+<div class="full-divider"></div>
+
+<!-- ── COWGIRL SUMMER VIDEO ── -->
+<section class="sec" id="video">
+  <div class="sec-eyebrow reveal">El Video</div>
+  <h2 class="sec-title reveal">Cowgirl <em>Summer</em></h2>
+  <p class="sec-body reveal">The official video — out now everywhere.</p>
+  <div class="vimeo-embed reveal">
+    <iframe
+      src="https://player.vimeo.com/video/1224329007?badge=0&autopause=0&player_id=0&app_id=58479"
+      frameborder="0"
+      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+      allowfullscreen
+      title="VNS — Cowgirl Summer">
+    </iframe>
+  </div>
+</section>
+
+<div class="full-divider"></div>
+
+<!-- ── LA REINA — TODAY ── -->
+<section class="sec" id="reina">
+  <div class="reina-intro">
+    <div>
+      <div class="sec-eyebrow reveal">La Reina</div>
+      <h2 class="sec-title reveal">Queen of <em>Her World</em></h2>
+      <div class="sec-body reveal">
+        She didn't just survive the frontier — she owns it.<br><br>
+        <em>VNS</em> is the artist who built her world from the ground up: California sun, desert dust, and a voice that carries the weight of every generation before her.<br><br>
+        The caballera has always known her worth. Now the world does too.
+      </div>
+    </div>
+    <div class="sec-body reveal" style="font-family:'Playfair Display',serif; font-style:italic; font-size:clamp(1.4rem,3vw,2.2rem); color:var(--brown); line-height:1.3; font-weight:700;">
+      "Tequila. Music.<br>Bailamos hasta<br><span style="color:var(--gold);">el amanecer.</span>"
+    </div>
+  </div>
+
+  <!-- 6 photo grid — 3 bar + 3 rust gown -->
+  <div class="reina-grid">
+
+    <!-- ROW 1: Bar shoot -->
+    <div class="reina-card reveal">
+      <img
+        src="https://www.dropbox.com/scl/fi/jihf0d0b96m1lo15alnq6/DSC00742.JPG?rlkey=hdjofsu5grdj1tn230gxe4avw&st=x81ck4ej&raw=1"
+        alt="VNS — bar doorway">
+      <div class="reina-card-overlay">
+        <div class="reina-card-label">Caballera · The Bar</div>
+      </div>
+    </div>
+
+    <div class="reina-card reveal">
+      <img
+        src="https://www.dropbox.com/scl/fi/1gx0siem42bgyl1v7ve0u/IMG_4043.jpg?rlkey=3r0rmlw377eklh08zphzb1110&st=hi3itdvq&raw=1"
+        alt="VNS — martini">
+      <div class="reina-card-overlay">
+        <div class="reina-card-label">Caballera · The Toast</div>
+      </div>
+    </div>
+
+    <div class="reina-card reveal">
+      <img
+        src="https://www.dropbox.com/scl/fi/xm8ro1mvx9m643i9sr2sh/IMG_4044.jpg?rlkey=zzubswp28jdjha8ma51ogo1s9&st=b7exo6o5&raw=1"
+        alt="VNS — leaning on bar">
+      <div class="reina-card-overlay">
+        <div class="reina-card-label">Caballera · The Hacienda</div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Rust gown shoot -->
+    <div class="reina-card featured reveal">
+      <img
+        src="https://raw.githubusercontent.com/ivcstudio/VNS/main/IMG_2338.JPG"
+        alt="VNS — arched door rust gown">
+      <div class="reina-card-overlay">
+        <div class="reina-card-label">La Reina · The Door</div>
+      </div>
+    </div>
+
+    <div class="reina-card featured reveal">
+      <img
+        src="https://raw.githubusercontent.com/ivcstudio/VNS/main/L1010175.JPG"
+        alt="VNS — staircase rust gown">
+      <div class="reina-card-overlay">
+        <div class="reina-card-label">La Reina · The Staircase</div>
+      </div>
+    </div>
+
+    <div class="reina-card featured reveal">
+      <img
+        src="https://raw.githubusercontent.com/ivcstudio/VNS/main/L1010050.jpg"
+        alt="VNS — back profile rust gown">
+      <div class="reina-card-overlay">
+        <div class="reina-card-label">La Reina · The Exit</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">VNS</div>
+  <div class="footer-world">Caballera, Reina del Desierto · World I</div>
+  <div class="footer-nav">
+    <a href="../index.html">← Back to VNS</a>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
